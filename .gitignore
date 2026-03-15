@@ -1,0 +1,6 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude project state (project-specific, not shared)
+PROJECT_STATE.md

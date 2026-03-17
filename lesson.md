@@ -2,7 +2,7 @@
 
 > 本文件由 Skill 自动维护，记录用户在交互中提出的修改建议与偏好。
 > 每个新项目启动时读取，使 Skill 从第一轮对话起即更贴合用户习惯。
-> 最后更新：2026-03-17
+> 最后更新：2026-03-18
 
 ---
 
@@ -67,6 +67,7 @@
 | 日期 | 文章来源（DOI/标题） | 更新内容 | 更新位置 |
 |------|-------------------|---------|---------|
 | 2026-03-17 | Chen et al. (2025). Current status and solutions for AI ethics in ophthalmology: a bibliometric analysis. npj Digital Medicine. https://doi.org/10.1038/s41746-025-01976-6 | ① 双流研究设计框架（B类）；② 学科定位对比图 + 指数增长拟合图（含Price曲线框架）；③ 时序叠加可视化（Overlay，蓝→橙/红色谱代表年份演化）；④ 跨维度交叉分析图（伦理主题×数据模态，分组柱状图）；⑤ Results/Discussion分界原则（严格描述性Results）；⑥ B类方法节可复现性声明范式；⑦ npj Digital Medicine 期刊档案（IF≈15.2，Q1，医疗AI方向） | analysis_guide.md（研究框架+4个新图表条目）；writing_examples.md（Results边界原则+B类方法节模板+可复现声明）；journal_standards.md（新增npj Digital Medicine档案）；SKILL.md（B类双流设计说明） |
+| 2026-03-18 | Thakur, M., & Kushwaha, A.K. (2024). [Title: Science mapping/bibliometric analysis of a management/information field]. Global Business and Organizational Excellence (GBOE). | ① 共被引 vs 书目耦合决策框架：成熟领域优先共被引（知识根基），新兴领域优先书目耦合（研究前沿），两者互补说明；② 非等分时间窗口策略：以发文量拐点为界划分时间段，萌芽期设较长窗口，快速增长期和近期各设独立短窗口；③ 本地引用 vs 全局引用区分：Top Cited Documents 报告全局引用，共被引网络使用本地引用（避免领域外文献主导网络）；④ Results 压轴综合汇总表（Capstone Summary Table）：按 RQ 组织，同时呈现定量证据（数字）和定性结论（一句话），置于 Results 末尾、Discussion 之前 | analysis_guide.md（§3.3新增共被引 vs 书目耦合决策框架、本地/全局引用区分；§分析参数速查新增非等分时间窗口策略）；writing_examples.md（新增 Results 压轴综合汇总表写法章节） |
 
 ---
 

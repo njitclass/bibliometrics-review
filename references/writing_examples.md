@@ -1,6 +1,6 @@
 # 各章节写作简报与示范
 
-> 最后更新：2026-03-17（从参考文献 Chen et al., 2025, npj Digital Medicine 更新）
+> 最后更新：2026-03-18（从参考文献 Thakur & Kushwaha, 2024, GBOE 更新：新增 Results 压轴综合汇总表写法）
 > 用途：阶段4b逐节撰写前的简报内容，提供底层逻辑与优秀标准
 
 ---
@@ -13,6 +13,7 @@
 - [3.2 Productive Sources（高产来源）](#32-productive-sources高产来源)
 - [3.3 Citation Analysis（引用结构）](#33-citation-analysis引用结构)
 - [3.4 Co-word & Thematic Analysis（共词与主题）](#34-co-word--thematic-analysis共词与主题)
+- [Results 压轴：综合汇总表（Capstone Summary Table）](#results-压轴综合汇总表capstone-summary-table)
 - [4. Discussion（讨论）](#4-discussion讨论)
 - [5. Conclusion（结论）](#5-conclusion结论)
 
@@ -277,6 +278,53 @@
 ### 战略坐标图解读示范
 
 > "The strategic diagram (Figure 5) maps research themes across four quadrants. The motor themes quadrant is dominated by **energy storage**, **grid integration**, and **photovoltaic efficiency** — topics that are both central to the field and internally cohesive, indicating mature and well-connected research streams. In the niche themes quadrant, **offshore wind turbine design** and **tidal energy systems** represent highly developed but relatively self-contained specializations, suggesting these are important sub-fields with limited cross-fertilization with the broader literature. Emerging themes include **green hydrogen production** and **vehicle-to-grid technology**, reflecting nascent but growing research directions that may become motor themes in subsequent periods."
+
+---
+
+## Results 压轴：综合汇总表（Capstone Summary Table）
+
+### 底层逻辑
+
+> 来源：Thakur & Kushwaha (2024)
+
+综合汇总表（Capstone Summary Table）是置于 Results 节**末尾**（所有分析子节之后、Discussion 之前）的一张结构化汇总表。它的核心价值：（1）让读者在进入 Discussion 之前，一眼看到所有 RQ 的答案全景；（2）直接对应 Introduction 中逐条提出的 RQ，形成首尾闭环；（3）同时呈现定量证据（数字）和定性归纳（一句话结论），兼顾可信度与可读性。这是区分精品综述与普通综述的标志性细节之一。
+
+### 优秀标准
+- ✓ 按 RQ 组织（每行对应一个 RQ 或分析维度）
+- ✓ 同时呈现**定量证据**（具体数字、排名、统计量）和**核心结论**（一句话定性提炼）
+- ✓ 表格列建议：RQ | 分析维度 | 主要发现（定量） | 核心结论（定性）
+- ✓ 与 Introduction 的 RQ 和 Conclusion 的贡献声明**完全对应**（编号一致）
+- ✓ 引导语简洁：一句话说明表格功能，不重复 Results 内容
+
+### 常见失分点
+- ✗ 仅列分析方法名称，不列具体发现数字
+- ✗ "核心结论"列照抄 Results 文字，无归纳提升
+- ✗ 遗漏某个 RQ，导致表格与引言 RQ 列表不对应
+- ✗ 将汇总表放在 Discussion 之后（应在之前）
+
+### 引导语写法示范
+
+> "Table X synthesizes the key findings of this bibliometric analysis across all three research questions, providing an integrated overview of the evidence base before Discussion."
+
+### 汇总表结构示范
+
+**场景**：以可再生能源文献计量研究为例（3个 RQ）
+
+| RQ | 分析维度 | 主要定量发现 | 核心结论 |
+|----|---------|------------|---------|
+| RQ1 | 发表趋势 | 2000–2023 年共 4,832 篇；CAGR=18.3%（2015–2023）；指数拟合 R²=0.97 | 领域处于持续快速增长阶段，2015 年为明显拐点 |
+| RQ1 | 地理分布 | 中国第一（n=1,203），美国第二（n=987）；美国篇均被引（42.3）是中国（18.7）的 2.3 倍 | 产出规模与影响力分布不对称，发文量≠影响力 |
+| RQ2 | 引用结构 | 共被引分析识别 4 个知识聚类；最高本地被引文献 Donthu et al. 2021（n=312） | 知识基础以政策框架、技术可行性、经济建模、社会接受度四条脉络为核心 |
+| RQ2 | 合著网络 | 识别 3 个主要国家合作集群；中欧合作强度最高（边权重=0.38） | 国际合作格局初步形成，但南北半球合作明显不足 |
+| RQ3 | 主题演化 | "能源存储"和"氢能"2015 年后年增长率>30%；战略坐标图列为 Emerging themes | 下一阶段研究焦点将从光伏效率转向储能与氢能 |
+
+### 在 Methods 节预告汇总表的写法
+
+> "A comprehensive summary table integrating findings across all research questions is provided at the end of the Results section."
+
+### 在 Conclusion 中引用汇总表的写法
+
+> "As synthesized in Table X, this study addresses the three research questions proposed in the Introduction. With respect to RQ1, findings indicate that..."
 
 ---
 

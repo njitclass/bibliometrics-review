@@ -1,6 +1,6 @@
 # 各章节写作简报与示范
 
-> 最后更新：2026-03-15
+> 最后更新：2026-03-17（从参考文献 Chen et al., 2025, npj Digital Medicine 更新）
 > 用途：阶段4b逐节撰写前的简报内容，提供底层逻辑与优秀标准
 
 ---
@@ -121,6 +121,63 @@
 ### 分析工具声明示范
 
 > "Co-occurrence analysis of author keywords was performed using VOSviewer (version 1.6.20; van Eck & Waltman, 2010). Keywords appearing fewer than three times were excluded, resulting in a network of 187 keywords from an initial 2,341 unique terms. The Association Strength normalization method was applied, and clusters were identified using the Leiden algorithm (resolution = 1.0). Bibliometric analyses, including thematic mapping and historical citation network analysis, were conducted using the Bibliometrix package (version 4.1.3) in R (version 4.3.0; R Core Team, 2023)."
+
+### 可复现性声明示范（高分必备，Nature 系列期刊尤其重视）
+
+可复现性声明（Reproducibility Statement）写在 Methods 节末尾，通常一句话，表明其他研究者可用相同方法重现结果：
+
+> "Researchers with access to the Web of Science Core Collection and Scopus databases can replicate this analysis using the search terms and screening strategy provided in the Supplementary Materials."
+
+**为什么重要**：审稿人需要确认你的数据不是"黑箱"。提供完整检索式（Supplementary Table）+ 工具版本 + 可复现声明，是 Nature Portfolio、Elsevier 旗下 Q1 期刊对文献计量研究的隐性要求。
+
+### B类双流方法节结构模板
+
+当文章同时包含标准文献计量（流一）和综合内容分析（流二）时，方法节建议按以下逻辑组织：
+
+```
+2.1 数据库选择与检索策略
+    ├── 数据库选择理由（为什么选 WoS + Scopus 而非单一数据库）
+    ├── 完整布尔检索式（Supplementary 附录）
+    └── 检索执行日期
+
+2.2 纳入排除标准与双编码筛查
+    ├── 纳入标准（建议精确到"必须同时涉及X/Y/Z三个主题"，交集而非并集）
+    ├── 排除标准（逐条列出，通常5条）
+    ├── 双编码员流程（两名独立编码员 + 第三方裁决不一致项）
+    └── PRISMA 流程（精确报告各阶段排除数量及原因）
+
+2.3 流一：标准文献计量分析
+    ├── Performance Analysis（发表趋势/高产来源）
+    ├── Co-authorship Analysis（合著网络）
+    └── Co-occurrence Analysis（共词网络，说明节点阈值和聚类参数）
+
+2.4 流二：综合文本分析
+    ├── 主题分类框架来源（基于已有文献构建编码表，列于 Supplementary Table）
+    ├── 编码程序（两名编码员独立编码 + 不一致项第三方裁决）
+    └── 趋势分析（时序追踪，建议以2–5年为粒度）
+```
+
+---
+
+## Results 节写作纪律：描述与解释的边界
+
+> **来源**：Chen et al. (2025) 的分析提供了一个清晰范本——Results 节维持严格的描述性姿态，所有因果解释均推迟到 Discussion 节进行。
+
+这是文献计量综述中最容易犯错的地方：**在 Results 里过早解释**，导致 Discussion 无话可说，也让 Results 读起来像个人观点而非客观报告。
+
+### Results 节标准句式（正确示范）
+
+| 场景 | 错误写法（含解释） | 正确写法（纯描述） |
+|------|-----------------|-----------------|
+| 报告某主题占比高 | "Privacy emerged as a major concern because retinal imaging is highly sensitive biometric data." | "Privacy and data security was identified in 14.5% of publications, with a notable increase observed after 2021." |
+| 报告国家排名 | "The US leads due to its substantial NIH funding." | "Publications from the United States (n=X) ranked first, followed by China (n=Y) and the UK (n=Z)." |
+| 报告趋势转变 | "This shift reflects growing societal concerns about AI governance." | "From 2020 to 2022, the focus shifted from 'traditional ethics concepts (respect, benefit)' toward 'AI-specific concerns (privacy, security, trust)', as evidenced by the overlay visualization." |
+
+### 合法的"比较性陈述"（可写入 Results）
+
+比较性陈述是陈述事实，不是因果解释，可以保留在 Results 中：
+- ✓ "Ophthalmology ranked second among 16 medical sub-disciplines, exceeding oncology in annual publications by 2022."
+- ✓ "The exponential growth model (Y=20.06e^0.4039x) yielded an excellent fit (R²=0.97)."
 
 ---
 

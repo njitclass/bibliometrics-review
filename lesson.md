@@ -2,7 +2,7 @@
 
 > 本文件由 Skill 自动维护，记录用户在交互中提出的修改建议与偏好。
 > 每个新项目启动时读取，使 Skill 从第一轮对话起即更贴合用户习惯。
-> 最后更新：2026-03-15
+> 最后更新：2026-03-17
 
 ---
 
@@ -66,7 +66,7 @@
 
 | 日期 | 文章来源（DOI/标题） | 更新内容 | 更新位置 |
 |------|-------------------|---------|---------|
-| — | — | — | — |
+| 2026-03-17 | Chen et al. (2025). Current status and solutions for AI ethics in ophthalmology: a bibliometric analysis. npj Digital Medicine. https://doi.org/10.1038/s41746-025-01976-6 | ① 双流研究设计框架（B类）；② 学科定位对比图 + 指数增长拟合图（含Price曲线框架）；③ 时序叠加可视化（Overlay，蓝→橙/红色谱代表年份演化）；④ 跨维度交叉分析图（伦理主题×数据模态，分组柱状图）；⑤ Results/Discussion分界原则（严格描述性Results）；⑥ B类方法节可复现性声明范式；⑦ npj Digital Medicine 期刊档案（IF≈15.2，Q1，医疗AI方向） | analysis_guide.md（研究框架+4个新图表条目）；writing_examples.md（Results边界原则+B类方法节模板+可复现声明）；journal_standards.md（新增npj Digital Medicine档案）；SKILL.md（B类双流设计说明） |
 
 ---
 

@@ -1,7 +1,23 @@
 # 文献计量分析图表指南
 
-> 最后更新：2026-03-15
+> 最后更新：2026-03-17（从参考文献 Chen et al., 2025, npj Digital Medicine 更新）
 > 用途：阶段3分析方案规划、阶段4b逐节图表菜单
+
+---
+
+## 研究设计框架：单流 vs 双流文献计量
+
+在规划分析方案前，先确定文章的方法论框架是**单流（Standard）**还是**双流（Hybrid）**：
+
+| 框架 | 适用场景 | 分析流 |
+|------|---------|-------|
+| **单流（A类标准）** | 纯文献计量，不进行内容编码 | 一条流：量化文献特征 |
+| **双流混合（B类进阶）** | 在标准计量基础上叠加主题内容分析 | 流一：标准文献计量（发表趋势/高产来源/引用结构/共词）<br>流二：综合文本分析（编码主题频次/模态分析/策略分类/时序演化）|
+
+> **双流设计建议**（参考 Chen et al., 2025）：
+> - 流一（Common Bibliometric Analysis）：Performance Analysis → Co-authorship Analysis → Co-occurrence Analysis
+> - 流二（Comprehensive Analysis）：Frequencies Analysis → Trend Analysis（对全文人工编码的主题/类别进行频次统计和时序追踪）
+> - 论文结构中建议用方法论流程图（Fig.1）可视化两条流的分工，帮助读者理解研究设计逻辑
 
 ---
 
@@ -33,6 +49,8 @@
 | 🟢 | Summary Statistics Table | 描述性统计表 | 总文献数、时间跨度、国家数、期刊数、作者数 | 快速呈现数据集规模，辅助样本充分性判断 | Word 表格 | 常作为 Table 1 |
 | 🟡 | Annual Publications and Citations Over Time | 双轴折线图 | 年份 + 发文量（左轴）+ 被引量（右轴） | 同时呈现产出规模与知识影响力的时序变化 | R `ggplot2` / Bibliometrix `annualProduction` | 注意标注两轴单位 |
 | 🟡 | Document Types Distribution | 饼图/环形图 | 文档类型（Article/Review/...）+ 占比 | 展示文献质量结构 | R `ggplot2` / Excel | 纳入标准验证用 |
+| 🟡 | Disciplinary Positioning Comparison | 柱状图+折线叠加，多学科并排 | 本领域在 N 个学科中的发文量/被引量排名 | 论证本领域在上位学科中的地位（"名列第X"），为研究选题提供宏观战略依据 | Excel（多系列柱状图）/ R `ggplot2` | 适合学科交叉选题；数据来自跨学科检索；Chen et al. 2025 中用此图确认眼科在医学AI伦理中排第二位 |
+| 🟡 | Exponential Growth Curve Fit | 散点+指数拟合曲线 | 年份 + 发文量 + 拟合公式（如 Y=a·e^(bx)）+ R² | 量化领域发展阶段：婴儿期→指数增长期→成熟期（Price 曲线框架）；提供 R² 值证明拟合优度 | GraphPad Prism / R `nls()` + `ggplot2` | 需在文中报告完整公式和 R²（如"Y=20.06e^0.4039x, R²=0.97"）；建议同时报告 CAGR 以便读者比较 |
 | 🔴 | Publication Growth Rate with Trend Projection | 折线图+预测置信区间 | 年份 + 发文量 + CAGR 计算 | 预判领域所处发展阶段（成长期/成熟期/衰退期） | R `forecast` 或 Python `statsmodels` | 需说明预测模型 |
 | 🔴 | Bradford's Law Visualization | 散点+拟合曲线 | 核心期刊 + 累计文章数 | 验证布拉德福定律，识别核心区/散射区期刊 | R `bibliometrix` `bradford` | 可选，增强方法论厚度 |
 
@@ -77,7 +95,7 @@
 | 🟡 | Co-citation Network of Authors | 网络图 | WoS CR 字段提取作者，最小共被引≥3 | 识别相互引用的核心学者群体 | VOSviewer（Type: Citation，Unit: Cited Authors） | 同上 |
 | 🟡 | Bibliographic Coupling Network of Documents | 网络图 | WoS CR 字段，最小共享参考文献≥5 | 识别当前研究前沿的相似研究集群 | VOSviewer（Type: Bibliographic Coupling，Unit: Documents） | 适合展示近5年研究趋势 |
 | 🔴 | Historiograph (Direct Citation Network) | 时间线网络图（纵轴=年份，横轴=引用关系） | WoS CR 字段，直接引用关系链 | 呈现知识演化的历史路径与奠基文献传承关系 | R `bibliometrix` `histNetwork`，可视化用 `histPlot` | 建议筛选被引≥3次的文献 |
-| 🔴 | Overlay Visualization (Citation Time Map) | 时间叠加网络图（节点颜色代表年份） | VOSviewer 导出 + 时间字段 | 在共被引网络上叠加时间维度，展示研究焦点的演化 | VOSviewer（Overlay Visualization 模式，Score: Year） | 颜色冷暖代表发表时间早晚 |
+| 🔴 | Overlay Visualization (Citation Time Map) | 时间叠加网络图（节点颜色代表年份） | VOSviewer 导出 + 时间字段 | 在共被引网络上叠加时间维度，展示研究焦点的演化 | VOSviewer（Overlay Visualization 模式，Score: Year） | 颜色冷暖代表发表时间早晚；蓝=早期，橙/红=近期；Chen et al. 2025 用此图展示眼科AI伦理研究热点从"respect/benefit"演化到"privacy/security/trust" |
 
 ---
 
@@ -104,6 +122,7 @@
 | 🟡 | Theoretical Frameworks Over Time (Heatmap) | 热力图（X轴=年份，Y轴=理论框架，颜色深浅=频次） | 编码结果（框架维度）+ 年份 | 展示理论框架使用的时序变化规律 | R `ggplot2` / Python `seaborn` |
 | 🟡 | Research Focus Distribution (Grouped Bar) | 分组柱状图 | 多个编码维度的频次 | 多维度对比不同研究特征的分布 | R `ggplot2` / Excel |
 | 🔴 | Inter-rater Reliability Report | 表格（编码员 + 维度 + κ值 + 一致率） + 方法说明 | 双编码员独立编码结果 | 证明内容编码的客观性与可重复性（B类方法论必需项） | R `irr` 包（`kappa2`函数）/ SPSS / Krippendorff's Alpha |
+| 🟡 | Cross-dimensional Theme × Category Chart | 分组柱状图（X轴=类别1，分组色=类别2）或矩阵热力图 | 两个编码维度的交叉频次表（如"伦理主题 × 数据模态"）| 揭示不同子类别之间的差异化内容规律（如不同数据模态对应不同伦理优先项）；是双流B类文章的核心贡献图表 | Excel（分组柱状图）/ R `ggplot2` | 参考 Chen et al. 2025 Fig.4b：用9个伦理主题×10个数据模态的交叉分析，揭示底眼成像→重解释性、面部摄影→重隐私的规律 |
 | 🔴 | Content-Bibliometrics Integration Matrix | 矩阵热力图（X轴=计量聚类，Y轴=内容主题） | 文献的计量聚类标签 + 内容编码标签 | 桥接计量分析与内容分析，揭示聚类的实质内容 | R `pheatmap` / Python `seaborn` |
 
 ---

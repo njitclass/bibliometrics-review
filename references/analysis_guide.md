@@ -1,6 +1,6 @@
 # 文献计量分析图表指南
 
-> 最后更新：2026-03-18（从参考文献 Thakur & Kushwaha, 2024, GBOE 更新：新增共被引 vs 书目耦合决策框架、本地/全局引用区分、非等分时间窗口策略）
+> 最后更新：2026-03-18（从参考文献 Trojanowski & Barmentloo, 2025, EMPS 更新：新增 RPYS 图表条目、Citations/Year 年化归一化、双规格鲁棒性三角验证策略、Biblioshiny 无代码工具路径）
 > 用途：阶段3分析方案规划、阶段4b逐节图表菜单
 
 ---
@@ -130,13 +130,39 @@
 
 | 档位 | 图表名称 | 类型 | 所需数据 | 功能定位 | 推荐工具 | 参数说明 |
 |------|---------|------|---------|---------|---------|---------|
-| 🟢 | Top 10 Most Cited Documents | 表格（文章标题 + 作者 + 年份 + 被引次数） | WoS TC 字段 | 识别领域奠基性文献，展示知识基础 | Excel | — |
+| 🟢 | Top 10 Most Cited Documents | 表格（文章标题 + 作者 + 年份 + 被引次数 + **Citations/Year**） | WoS TC 字段 + 发表年份 | 识别领域奠基性文献，展示知识基础；Citations/Year = 总被引 ÷ 发表至今年数，用于新旧文献公平比较 | Excel | 同时报告总引用和Citations/Year两列：总引用=绝对影响力；Citations/Year=增长速度（如近三年发表但Citations/Year极高，说明该文献快速获得认可，是新兴奠基文）|
 | 🟢 | Top 10 Most Cited Authors | 表格（作者 + 总被引量） | WoS TC+AU 字段 | 识别最具影响力的学者 | Excel | — |
 | 🟡 | Co-citation Network of References | 网络图 | WoS CR 字段，最小共被引≥5 | 揭示领域知识基础的聚类结构，识别研究流派 | VOSviewer（Type: Citation，Unit: Cited References） | 归一化：Association Strength；聚类：Leiden algorithm |
 | 🟡 | Co-citation Network of Authors | 网络图 | WoS CR 字段提取作者，最小共被引≥3 | 识别相互引用的核心学者群体 | VOSviewer（Type: Citation，Unit: Cited Authors） | 同上 |
 | 🟡 | Bibliographic Coupling Network of Documents | 网络图 | WoS CR 字段，最小共享参考文献≥5 | 识别当前研究前沿的相似研究集群 | VOSviewer（Type: Bibliographic Coupling，Unit: Documents） | 适合展示近5年研究趋势 |
 | 🔴 | Historiograph (Direct Citation Network) | 时间线网络图（纵轴=年份，横轴=引用关系） | WoS CR 字段，直接引用关系链 | 呈现知识演化的历史路径与奠基文献传承关系 | R `bibliometrix` `histNetwork`，可视化用 `histPlot` | 建议筛选被引≥3次的文献 |
 | 🔴 | Overlay Visualization (Citation Time Map) | 时间叠加网络图（节点颜色代表年份） | VOSviewer 导出 + 时间字段 | 在共被引网络上叠加时间维度，展示研究焦点的演化 | VOSviewer（Overlay Visualization 模式，Score: Year） | 颜色冷暖代表发表时间早晚；蓝=早期，橙/红=近期；Chen et al. 2025 用此图展示眼科AI伦理研究热点从"respect/benefit"演化到"privacy/security/trust" |
+| 🔴 | RPYS (Reference Publication Year Spectroscopy) | 折线图（X轴=被引文献出版年，Y轴=被引频次 + 5年滚动中位数偏差） | WoS/Scopus CR 字段，提取所有被引文献的出版年 | 识别领域知识基础的"突破年份"——哪些年份发表的方法/理论论文在后期被大量引用，是理解领域发展节点的独特视角 | R `bibliometrix` `rpys()` / Biblioshiny | 用5年滚动中位数作为基线，偏差（deviation）显著高于零的年份 = 领域知识突破节点；Trojanowski & Barmentloo 2025 发现 2016–2019 年峰值对应深度学习和 NLP 的突破 |
+
+---
+
+### 双规格鲁棒性三角验证策略
+
+> 来源：Trojanowski & Barmentloo (2025)
+
+**核心思想**：同一种网络分析（如书目耦合聚类）运行两次，每次仅改变**一个参数维度**，对比结果是否一致。若主要结论稳定 → 结果是规格无关的（可信）；若结论随规格变化 → 需在 Discussion 解释差异来源（比如"GCS 放大了被高度引用的全球热点论文，而 LCS 更聚焦领域内部的知识流动"）。
+
+**推荐的双规格配置（参考 Trojanowski & Barmentloo 2025）**：
+
+| 参数维度 | 主规格（Analysis 1） | 比较规格（Analysis 2） | 目的 |
+|---------|---------------------|----------------------|------|
+| **影响力度量** | 本地引用分 LCS（语料库内被引次数） | 全局引用分 GCS（数据库总被引次数） | 检验聚类结构是否依赖引用来源 |
+| **标签来源** | 数据库索引词（Index Keywords / ID 字段） | 作者自选关键词（Authors' Keywords / DE 字段） | 检验主题命名是否依赖术语来源 |
+| **耦合方式**（可选） | 文献级书目耦合 | 关键词共现 | 检验聚类层级一致性 |
+
+**操作步骤**：
+1. 确定主规格配置（如 LCS + Index Keywords），完整运行并记录聚类结构（聚类数、主题标签、中心度排名）
+2. 仅改变一个参数（如 LCS → GCS，其他不变），再次运行
+3. 对比两套结果：聚类数是否稳定？核心主题排名是否一致？少数聚类的命名是否有明显差异？
+4. 在方法节声明："To verify the robustness of our findings, we replicated the analysis using [Alternative Spec]. The cluster structure remained stable across both specifications (see Appendix), confirming the reliability of the reported thematic patterns."
+5. 将两套结果的对比表格放入 Appendix，Discussion 中用一段话解释任何实质性差异
+
+> **什么时候必须做**：若期刊为 Scientometrics / JoI / IJIM 等高要求 Q1，或审稿意见中出现"robustness check"字样时，建议加做双规格验证。
 
 ---
 
@@ -183,16 +209,23 @@
 
 ### Bibliometrix 常用函数速查
 
-| 功能 | 函数 | 主要参数 |
-|------|------|---------|
-| 读取数据 | `convert2df()` | `format="wos"` 或 `"scopus"` |
-| 描述性分析 | `biblioAnalysis()` + `summary()` | — |
-| 年产出图 | `plot(M, "production")` | — |
-| 主题图 | `thematicMap()` | `field="DE"`, `n=250`, `minfreq=5` |
-| 主题演化 | `thematicEvolution()` | `years=c(2000,2010,2023)` |
-| 国家合作地图 | `countryCollaboration()` + `worldMap()` | — |
-| 历史引用网络 | `histNetwork()` + `histPlot()` | `min.citations=3` |
-| 作者合著网络 | `biblioNetwork(analysis="collaboration")` | `network="authors"` |
+> **工具选择提示**：
+> - 会写 R 代码 → 使用 **Bibliometrix R 包**（灵活性最高，可重现）
+> - 不会写代码 → 使用 **Biblioshiny**（Bibliometrix 的网页 GUI 版，在 R 中运行 `biblioshiny()` 即可打开，无需编写代码，支持95%以上的分析功能）
+>
+> 两者底层算法完全相同，产出结果一致。Biblioshiny 适合快速探索和非编程用户；R 代码更适合需要精确参数控制和可重现报告的正式分析（Trojanowski & Barmentloo 2025 全程使用 Biblioshiny）。
+
+| 功能 | R 函数 | Biblioshiny 路径 | 主要参数 |
+|------|--------|----------------|---------|
+| 读取数据 | `convert2df()` | 首页→上传文件 | `format="wos"` 或 `"scopus"` |
+| 描述性分析 | `biblioAnalysis()` + `summary()` | Overview→Main Results | — |
+| 年产出图 | `plot(M, "production")` | Overview→Annual Production | — |
+| 主题图 | `thematicMap()` | Clustering→Thematic Map | `field="DE"`, `n=250`, `minfreq=5` |
+| 主题演化 | `thematicEvolution()` | Clustering→Thematic Evolution | `years=c(2000,2010,2023)` |
+| 国家合作地图 | `countryCollaboration()` + `worldMap()` | Networks→Collaboration→Country | — |
+| 历史引用网络 | `histNetwork()` + `histPlot()` | Networks→Historical Direct Citation | `min.citations=3` |
+| 作者合著网络 | `biblioNetwork(analysis="collaboration")` | Networks→Collaboration→Authors | `network="authors"` |
+| RPYS 光谱分析 | `rpys()` | Extra→Reference Publication Year Spectroscopy | `sep=";"` |
 
 ### 多期时序共词分析：非等分时间窗口策略
 

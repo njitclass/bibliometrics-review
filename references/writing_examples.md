@@ -1,6 +1,6 @@
 # 各章节写作简报与示范
 
-> 最后更新：2026-03-18（从参考文献 Thakur & Kushwaha, 2024, GBOE 更新：新增 Results 压轴综合汇总表写法）
+> 最后更新：2026-03-18（从参考文献 Trojanowski & Barmentloo, 2025, EMPS 更新：新增双数据库选库协议、关键词轨迹推演表写法）
 > 用途：阶段4b逐节撰写前的简报内容，提供底层逻辑与优秀标准
 
 ---
@@ -12,7 +12,7 @@
 - [3.1 Publication Trends（发表趋势）](#31-publication-trends发表趋势)
 - [3.2 Productive Sources（高产来源）](#32-productive-sources高产来源)
 - [3.3 Citation Analysis（引用结构）](#33-citation-analysis引用结构)
-- [3.4 Co-word & Thematic Analysis（共词与主题）](#34-co-word--thematic-analysis共词与主题)
+- [3.4 Co-word & Thematic Analysis（共词与主题）](#34-co-word--thematic-analysis共词与主题)（含关键词轨迹推演表）
 - [Results 压轴：综合汇总表（Capstone Summary Table）](#results-压轴综合汇总表capstone-summary-table)
 - [4. Discussion（讨论）](#4-discussion讨论)
 - [5. Conclusion（结论）](#5-conclusion结论)
@@ -112,6 +112,41 @@
 ### 衔接逻辑
 ↑ 承接 Introduction（RQ对应所选分析类型）
 ↓ 引出 Results（"Based on the methodology described above, the following section presents the results..."）
+
+### 数据库遴选协议：双库比较 → 量化选库
+
+> 来源：Trojanowski & Barmentloo (2025)
+
+不要随意声明"本研究选择 Scopus/WoS"，而要**用数据证明选库的合理性**。以下是一个可直接复用的 5 步协议：
+
+**五步数据库遴选协议**：
+
+| 步骤 | 操作 | 产出 |
+|------|------|------|
+| Step 1 | 确定纳入标准（研究领域、文献类型、语言、时间范围） | 纳入/排除标准清单 |
+| Step 2 | 用**相同检索式**同时检索 WoS 和 Scopus，记录各自检索量 | 初始文献量（如 WoS=1,512 vs Scopus=492） |
+| Step 3 | 对两个库的数据集分别运行**作者关键词频次分析**，计算核心主题词的覆盖比例 | 关键词对比表（双列并排，见下方示例） |
+| Step 4 | 基于关键词覆盖率做出主库决策，写明量化理由 | 数据库选择决策及理由（如"Scopus 中'marketing'占比 7.1% > WoS 的 2.9%"） |
+| Step 5 | 以选定库运行主体分析 | 最终语料库（如 n=492，Scopus only） |
+
+**关键词覆盖对比表（Table X 形式）**：
+
+| Authors' Keywords | WoS（n=1,512）| Scopus（n=492） |
+|-------------------|--------------:|---------------:|
+| artificial intelligence | 456 | 233 |
+| **marketing** | **48** | **56** |
+| **digital marketing** | **25** | **33** |
+| machine learning | 45 | 30 |
+
+> 注：表格只需包含领域核心词（你的研究主题词），用高亮或粗体标出决策关键词，让读者一眼看出哪个库更吻合研究主题。
+
+**方法节报告模板**：
+
+> "To identify the thematically most appropriate database for the main analysis, we retrieved records from both Web of Science (n=1,512) and Scopus (n=492) using identical search strategies. A preliminary analysis of author-supplied keywords revealed that the term 'marketing' appeared in 7.1% of Scopus records compared to only 2.9% in the Web of Science dataset (Table X). This pronounced disparity confirmed that the Scopus corpus provides substantially higher topical relevance for our research domain. Accordingly, the Scopus dataset (n=492) was designated as the sole analytical corpus for all subsequent bibliometric analyses."
+
+> **选库说明的价值**：审稿人需要确认语料库的主题纯度。提供量化的双库对比而非主观声明，可以将"选库"这一方法决策转化为可核实的客观证据，大幅降低被质疑数据库偏倚的风险。
+
+---
 
 ### 检索策略描述示范
 
@@ -278,6 +313,31 @@
 ### 战略坐标图解读示范
 
 > "The strategic diagram (Figure 5) maps research themes across four quadrants. The motor themes quadrant is dominated by **energy storage**, **grid integration**, and **photovoltaic efficiency** — topics that are both central to the field and internally cohesive, indicating mature and well-connected research streams. In the niche themes quadrant, **offshore wind turbine design** and **tidal energy systems** represent highly developed but relatively self-contained specializations, suggesting these are important sub-fields with limited cross-fertilization with the broader literature. Emerging themes include **green hydrogen production** and **vehicle-to-grid technology**, reflecting nascent but growing research directions that may become motor themes in subsequent periods."
+
+### 关键词轨迹推演表（Keyword Trajectory Inference Table）
+
+> 来源：Trojanowski & Barmentloo (2025)
+
+战略坐标图展示的是**当下**每个关键词的位置（现状），但高分 Discussion 需要回答**未来**这些关键词将走向哪里。关键词轨迹推演表把战略坐标图从"描述当下"升级为"预判未来"，是将共词分析与 Discussion 打通的关键写作手法。
+
+**表格结构**（通常置于 §3.4 末尾，是 Results 到 Discussion 的过渡段落）：
+
+| 关键词 | Callon 象限 | 当前位置特征 | 轨迹推演（Authors posit that...） |
+|--------|------------|------------|--------------------------------|
+| [Motor 主题] | Motor | 高中心度+高密度，领域核心 | 中心度将进一步增强，重点方向：量化因果链、ROI 标准化、与结果指标的直接连接 |
+| [Basic 主题] | Basic | 高中心度+低密度，基础性但仍在概念化阶段 | 密度将随类型学建设和治理框架完善而提升，逐步向 Motor 演化 |
+| [Niche 主题] | Niche | 低中心度+高密度，内部成熟但外部整合不足 | 中心度将在可持续框架被纳入主流效果评估后提升（如 eco-ROI 指标） |
+| [Emerging 主题] | Emerging/Marginal | 早期阶段，孤立于核心网络 | 将随领域相邻应用成熟（如语音电商）和效果测量标准化而逐步迁移至核心 |
+
+**写作规则**：
+- ✓ 每个象限至少有一个代表性关键词的轨迹推演
+- ✓ 推演要基于**具体机制**（"因为X研究的深化"）而非泛泛的"将来会更重要"
+- ✓ 轨迹推演中的"未来方向"要与 Discussion 的 Future Research Directions 一一对应
+- ✗ 不要把所有 Emerging 主题都说成"有潜力"——要区分"有整合进主流的路径"和"暂时孤立的边缘话题"
+
+**引导段示范**：
+
+> "Building on the thematic structure identified above, Table X provides an interpretive extension of the strategic diagram. For each key concept, we assess its current network position and infer its most probable developmental trajectory based on the coupling dynamics and outcome linkages identified in this study."
 
 ---
 

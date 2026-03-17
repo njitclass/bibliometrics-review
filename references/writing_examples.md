@@ -1,6 +1,6 @@
 # 各章节写作简报与示范
 
-> 最后更新：2026-03-18（从参考文献 Trojanowski & Barmentloo, 2025, EMPS 更新：新增双数据库选库协议、关键词轨迹推演表写法）
+> 最后更新：2026-03-18（从参考文献 肖永慧 & 张庆龙, 2025, 财会通讯 更新：双数据库协议补充 CNKI 主库规范、新增中外文献对比表写法）
 > 用途：阶段4b逐节撰写前的简报内容，提供底层逻辑与优秀标准
 
 ---
@@ -145,6 +145,30 @@
 > "To identify the thematically most appropriate database for the main analysis, we retrieved records from both Web of Science (n=1,512) and Scopus (n=492) using identical search strategies. A preliminary analysis of author-supplied keywords revealed that the term 'marketing' appeared in 7.1% of Scopus records compared to only 2.9% in the Web of Science dataset (Table X). This pronounced disparity confirmed that the Scopus corpus provides substantially higher topical relevance for our research domain. Accordingly, the Scopus dataset (n=492) was designated as the sole analytical corpus for all subsequent bibliometric analyses."
 
 > **选库说明的价值**：审稿人需要确认语料库的主题纯度。提供量化的双库对比而非主观声明，可以将"选库"这一方法决策转化为可核实的客观证据，大幅降低被质疑数据库偏倚的风险。
+
+---
+
+### 特殊情形：以 CNKI 为主库的双库协议
+
+> 来源：肖永慧 & 张庆龙 (2025)
+
+当研究聚焦**中文学界**（如中国会计、财务管理、中医药、教育政策等领域），WoS/Scopus 的覆盖极为有限，此时应将 **CNKI（中国知网）** 作为主库，WoS 作为补充库以纳入国际视角。
+
+**CNKI 主库规范**：
+
+| 项目 | 操作规范 |
+|------|---------|
+| **来源数据库** | 优先选择 **CSSCI**（中文社会科学引文索引）+ **北大核心期刊**，确保文献质量（可在 CNKI 高级检索中勾选"来源类别"） |
+| **检索字段** | 篇名 / 主题词 / 关键词（对应 WoS 的 TI / AB / AK） |
+| **文献类型** | 仅保留期刊论文（排除硕博论文、报纸、会议论文，保持与 WoS 口径一致） |
+| **导出格式** | 选择 **Refworks 格式**（CiteSpace 支持）或 **自定义格式**（含关键词/摘要/引用字段）；注意 CNKI 不支持批量导出超过 500 条，超量时分批导出再合并 |
+| **去重方式** | 合并 CNKI + WoS 文献后，先按 DOI 去重（WoS 文章通常有 DOI），再按标题字符串匹配去重 |
+
+**方法节双库报告模板（CNKI 为主库版）**：
+
+> "Data were collected from two complementary databases: CNKI (China National Knowledge Infrastructure, n=514, comprising CSSCI and Peking University Core Journals) and the Web of Science Core Collection (WoS, n=238). CNKI served as the primary database given the predominantly Chinese-language scholarship in this domain, while WoS provided supplementary coverage of international publications. Combined, the corpus comprised 752 unique records after deduplication."
+
+> **使用 CiteSpace 处理 CNKI 数据**：CiteSpace 对 CNKI 导出的 Refworks 格式有原生支持（Data → Import → CNKI），是处理中文文献计量数据最适合的工具。VOSviewer 和 Bibliometrix 对 CNKI 格式的支持较弱，可能需要手动字段映射。
 
 ---
 
@@ -338,6 +362,34 @@
 **引导段示范**：
 
 > "Building on the thematic structure identified above, Table X provides an interpretive extension of the strategic diagram. For each key concept, we assess its current network position and infer its most probable developmental trajectory based on the coupling dynamics and outcome linkages identified in this study."
+
+### 中外文献对比表（Bilateral Literature Comparison Table）
+
+> 来源：肖永慧 & 张庆龙 (2025)
+
+当同时检索 CNKI（中文学界）和 WoS（国际学界）时，可在 §3.4 共词分析中插入一张**双列并排对比表**，直接展示两个学界的知识结构差异。这是"双库研究"的核心贡献性写法，让读者一张表看懂中外研究格局的系统性分歧。
+
+**适用场景**：研究者同时检索 CNKI + WoS，且两库在主题聚类上存在显著差异（尤其是中文学者的研究优先项与国际主流不同步时）。
+
+**表格结构**（以 Top-5 关键词聚类为例）：
+
+| 排名 | CNKI 主题聚类（n=514） | WoS 主题聚类（n=238） |
+|------|----------------------|---------------------|
+| 1 | 财务共享服务 / 集中化与规范化 | Financial Shared Services / Centralization |
+| 2 | ERP系统 / IT系统化应用 | Cloud Computing / Digital Transformation |
+| 3 | 财务数字化转型 / 大数据 | Artificial Intelligence / Machine Learning |
+| 4 | 集团管控 / 内部控制 | Outsourcing / Cost Reduction |
+| 5 | 财务机器人 / RPA / 智能财务 | Customer Satisfaction / Service Quality |
+
+**引导段写法示范**：
+
+> "To identify systematic differences in research priorities between Chinese and international scholarship, Table X compares the top keyword clusters derived from the CNKI and WoS corpora, respectively. Chinese-language publications (CNKI) emphasize **internal governance and standardization** — themes such as 'centralized accounting', 'internal control', and 'group management' dominate, reflecting the prominent role of large state-owned enterprises in driving financial shared service adoption in China. In contrast, international publications (WoS) center on **technology enablers and service outcomes**, with 'cloud computing', 'artificial intelligence', and 'customer satisfaction' appearing as top clusters. This bilateral comparison reveals a notable temporal lag: topics currently dominant in the international literature (AI-driven services) remain emergent in Chinese scholarship, while China-specific governance concerns are largely absent from international discourse."
+
+**写作规则**：
+- ✓ 对比表放在§3.4（共词分析）而不是§3.2（高产来源），因为它是主题层面而非产出层面的对比
+- ✓ 引导段需**解释差异的实质原因**（不只是列出差异），结合领域背景说明为何两库聚焦不同
+- ✓ 在 Discussion 中将这一差异链接到理论贡献（如"本研究首次系统呈现了中外财务共享研究的知识结构鸿沟"）
+- ✓ 与 Limitations 中的"语言偏倚"形成呼应（解释英文为何系统性地欠代表某些研究视角）
 
 ---
 

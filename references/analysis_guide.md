@@ -1,6 +1,6 @@
 # 文献计量分析图表指南
 
-> 最后更新：2026-03-18（从参考文献 Trojanowski & Barmentloo, 2025, EMPS 更新：新增 RPYS 图表条目、Citations/Year 年化归一化、双规格鲁棒性三角验证策略、Biblioshiny 无代码工具路径）
+> 最后更新：2026-03-18（从参考文献 肖永慧 & 张庆龙, 2025, 财会通讯 更新：新增 CiteSpace 工具条目、突变词检测图表、Q/S 聚类质量指标、Timezone View 时间线图谱）
 > 用途：阶段3分析方案规划、阶段4b逐节图表菜单
 
 ---
@@ -177,6 +177,8 @@
 | 🟡 | Trending Topics (Word Dynamics Over Time) | 多折线图或气泡图 | DE 字段 + 年份 + 频次 | 追踪关键词热度随时间的变化，识别新兴主题 | R `bibliometrix` `fieldByYear` | 选取频次 Top 10–15 关键词 |
 | 🔴 | Thematic Evolution Map | 桑基图/Alluvial图（节点=主题，箭头=时间流向） | 分时段关键词聚类结果 | 展示研究主题随时间的演化、合并与分裂 | R `ggalluvial` / Bibliometrix `thematicEvolution` | 建议分2–3个时间段；需预先定义时间窗口 |
 | 🔴 | Topic Modeling Visualization (LDA) | 气泡图或热力图 | 全文摘要（Abstract 字段） | 基于文本内容的主题发现，补充关键词分析 | R `topicmodels` + `ggplot2` / Python `gensim` | 超出标准文献计量范畴，适合 B 类综述 |
+| 🟡 | Keyword Burst Chart（突变词图谱） | 时序条形图（X轴=时间，Y轴=关键词，条长=突变强度和持续期） | DE/ID 字段 + 年份，使用 LLR（Log-Likelihood Ratio）算法检测 | 识别在特定时期**引用/频次骤然飙升**的关键词，捕捉研究前沿演变节点；与 RPYS 互补（RPYS 看被引文献节点，Burst 看关键词爆发） | CiteSpace（Analysis → Burst Detection） | 设置 γ（突变强度阈值，建议 ≥ 1.0）和最短持续期（建议 ≥ 2年）；可据此划分领域发展阶段并用阶段名命名（如"数字化整合期 2018–2022"）；参见 §写作范式：五阶段命名法 |
+| 🟡 | Timezone View（时间线图谱） | 时间线网络图（纵轴=关键词聚类，横轴=时间，节点颜色=聚类） | DE/ID 字段聚类结果 + 年份 | 展示各研究主题**何时兴起、如何沿时间轴演化**；是 CiteSpace 对 VOSviewer/Bibliometrix Overlay Map 的替代实现，侧重历时动态而非共时网络结构 | CiteSpace（Visualize → Timezone View） | Timezone View 是 CiteSpace 独有的视图模式，切换至此模式无需重新运行分析；注意与主题演化桑基图（Thematic Evolution Map）的区别：后者按时段聚类，Timezone View 按时间轴连续展示 |
 
 ---
 
@@ -195,6 +197,24 @@
 ---
 
 ## 分析参数速查
+
+### 主流工具对比速查
+
+> 来源：综合多篇参考文献（Chen 2025, Thakur 2024, Trojanowski 2025, 肖永慧 2025）
+
+| 工具 | 开发机构 | 运行环境 | 核心优势 | 独有功能 |
+|------|---------|---------|---------|---------|
+| **VOSviewer** | CWTS, 莱顿大学 | Windows/Mac（免费） | 直观网络可视化，适合共被引/共现/合著网络 | Overlay Visualization（时间叠加着色） |
+| **Bibliometrix / Biblioshiny** | 那不勒斯大学 | R + Rstudio（开源）；Biblioshiny 为无代码 GUI | 全流程一站式分析；RPYS、主题演化、战略坐标图 | RPYS 光谱分析；thematicEvolution |
+| **CiteSpace** | Drexel 大学 Chaomei Chen | Java（免费，需安装 JRE） | 知识演化与研究前沿检测；擅长时序动态分析 | **突变词检测（Burst Detection）**；**时间线图谱（Timezone View）**；Modularity Q/S 聚类质量报告 |
+
+> **选择建议**：
+> - 初学者 / 快速可视化 → **VOSviewer**（上手最快）
+> - 完整方法论 / 可复现报告 → **Bibliometrix / Biblioshiny**（功能最全）
+> - 时序演化 / 中文学者 / CNKI 数据 → **CiteSpace**（对 CNKI 格式支持好，突变词和时间线是独有优势）
+> - **可以组合使用**：用 VOSviewer 做共现网络可视化 + Bibliometrix 做主题图 + CiteSpace 做突变词分析，三者并不互斥
+
+---
 
 ### VOSviewer 常用参数设置
 
@@ -226,6 +246,25 @@
 | 历史引用网络 | `histNetwork()` + `histPlot()` | Networks→Historical Direct Citation | `min.citations=3` |
 | 作者合著网络 | `biblioNetwork(analysis="collaboration")` | Networks→Collaboration→Authors | `network="authors"` |
 | RPYS 光谱分析 | `rpys()` | Extra→Reference Publication Year Spectroscopy | `sep=";"` |
+
+### 聚类质量指标：Modularity Q + Silhouette S
+
+> 来源：肖永慧 & 张庆龙 (2025)；仅适用于 CiteSpace 输出的聚类结果
+
+在 CiteSpace 运行关键词共现或共被引聚类后，系统自动输出两个聚类质量指标。报告这两个指标是 CiteSpace 研究的规范要求：
+
+| 指标 | 全称 | 计算含义 | 判断标准 |
+|------|------|---------|---------|
+| **Modularity Q** | 模块度 | 衡量网络划分为聚类的结构显著性（聚类内连接密度 vs 聚类间连接密度的比值） | Q > 0.3：聚类结构显著，网络划分有效 |
+| **Silhouette S** | 轮廓系数 | 衡量聚类内部同质性（每个节点距自身聚类重心 vs 距最近外部聚类重心的比值） | S > 0.5：聚类可信；S > 0.7：聚类高度显著 |
+
+**在方法节报告规范**：
+
+> "The keyword co-occurrence network was clustered using CiteSpace's built-in algorithm. The clustering solution yielded a modularity Q value of 0.XX (> 0.3, indicating significant network structure) and a mean silhouette score of 0.XX (> 0.5, indicating reliable cluster quality), confirming the validity of the identified thematic groupings."
+
+> **注意**：VOSviewer 使用 Leiden/Modularity 算法但不直接输出 Q 和 S 值；Bibliometrix 也不提供同等格式的 Q/S 报告。以上两个指标是 **CiteSpace 特有**的输出格式，使用其他工具时无需（也无法）报告这两个值，可改为报告网络密度（Network density）或聚类数量。
+
+---
 
 ### 多期时序共词分析：非等分时间窗口策略
 

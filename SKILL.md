@@ -153,7 +153,41 @@ B 类文章通常采用**双流研究设计**（参考 Chen et al., 2025, npj Di
 - **流二（Comprehensive Analysis）**：人工编码 + 频次/时序统计 → 回答"内容层面有哪些规律？"
 - 建议在 Methods 节用流程图（Fig.1）可视化两条流的分工，并在 Results 节各子节明确标注属于哪条流
 
-**初始化项目目录**：在用户工作目录创建 `bibliometrics-project/PROJECT_STATE.md`
+**初始化项目目录**：在用户工作目录创建 `bibliometrics-project/PROJECT_STATE.md`，使用以下标准模板：
+
+```markdown
+# PROJECT_STATE — [项目标题]
+
+## 基本信息
+| 字段 | 值 |
+|------|---|
+| 创建日期 | YYYY-MM-DD |
+| 当前阶段 | 阶段 0 — 选题诊断 |
+| 文章类型 | 待定（A类 / B类） |
+| 目标期刊 | 待定 |
+| 数据库 | 待定 |
+| 语料库规模 | 待定 |
+
+## 研究问题（RQ）
+> 阶段 1 确认后填入
+
+## 章节结构
+> 阶段 4a 确认后填入
+
+## 图表选择记录
+| 章节 | 选定图表 | 档位 | 状态 |
+|------|---------|------|------|
+> 阶段 4b 逐节填入
+
+## 风险日志（Risk Log）
+| 日期 | 风险描述 | 用户决策 | 状态 |
+|------|---------|---------|------|
+
+## 阶段推进记录
+| 阶段 | 进入日期 | 完成日期 | 备注 |
+|------|---------|---------|------|
+| 0 — 选题诊断 | YYYY-MM-DD | | |
+```
 
 ---
 
@@ -380,6 +414,7 @@ Results 拆为：`3. Results: Bibliometric Analysis` + `4. Results: Content Anal
 |------|------|---------|
 | `lesson.md` | 用户跨项目偏好 | 每次对话启动时 |
 | `references/prisma_checklist.md` | PRISMA 2020 完整清单 | 阶段2设计协议、阶段5合规审查 |
-| `references/analysis_guide.md` | 图表菜单（三档）+ 分析参数 | 阶段3分析方案、阶段4b每节图表选择 |
+| `references/analysis_guide.md` | 图表菜单（三档）：按论文章节组织 | 阶段3分析方案、阶段4b每节图表选择 |
+| `references/tool_reference.md` | 工具参数速查：VOSviewer/Bibliometrix/CiteSpace 参数 + 分析策略 | 阶段3工具选择、阶段4b方法节撰写 |
 | `references/journal_standards.md` | 目标期刊风格要求 | 阶段1 RQ设计、阶段5 编辑视角评审 |
 | `references/writing_examples.md` | 各节优秀写作示范 | 阶段4b每节简报 |

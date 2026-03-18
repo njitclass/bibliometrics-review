@@ -1,7 +1,8 @@
 # 文献计量分析图表指南
 
-> 最后更新：2026-03-18（从参考文献 肖永慧 & 张庆龙, 2025, 财会通讯 更新：新增 CiteSpace 工具条目、突变词检测图表、Q/S 聚类质量指标、Timezone View 时间线图谱）
+> 最后更新：2026-03-18（v0.10.0 架构重构：工具参数速查已迁移至 `tool_reference.md`，本文件专注于图表菜单）
 > 用途：阶段3分析方案规划、阶段4b逐节图表菜单
+> 姊妹文件：`references/tool_reference.md`（工具对比 + 参数设置 + 分析策略）
 
 ---
 
@@ -37,7 +38,7 @@
 - [3.3 引用结构分析](#33-引用结构分析-citation-analysis)
 - [3.4 共词与主题分析](#34-共词与主题分析-co-word-analysis)
 - [B类专属：内容分析结果](#b类专属内容分析结果)
-- [分析参数速查](#分析参数速查)
+- [分析参数速查（→ 跳转至 tool_reference.md）](#分析参数速查)
 
 ---
 
@@ -143,26 +144,9 @@
 
 ### 双规格鲁棒性三角验证策略
 
-> 来源：Trojanowski & Barmentloo (2025)
-
-**核心思想**：同一种网络分析（如书目耦合聚类）运行两次，每次仅改变**一个参数维度**，对比结果是否一致。若主要结论稳定 → 结果是规格无关的（可信）；若结论随规格变化 → 需在 Discussion 解释差异来源（比如"GCS 放大了被高度引用的全球热点论文，而 LCS 更聚焦领域内部的知识流动"）。
-
-**推荐的双规格配置（参考 Trojanowski & Barmentloo 2025）**：
-
-| 参数维度 | 主规格（Analysis 1） | 比较规格（Analysis 2） | 目的 |
-|---------|---------------------|----------------------|------|
-| **影响力度量** | 本地引用分 LCS（语料库内被引次数） | 全局引用分 GCS（数据库总被引次数） | 检验聚类结构是否依赖引用来源 |
-| **标签来源** | 数据库索引词（Index Keywords / ID 字段） | 作者自选关键词（Authors' Keywords / DE 字段） | 检验主题命名是否依赖术语来源 |
-| **耦合方式**（可选） | 文献级书目耦合 | 关键词共现 | 检验聚类层级一致性 |
-
-**操作步骤**：
-1. 确定主规格配置（如 LCS + Index Keywords），完整运行并记录聚类结构（聚类数、主题标签、中心度排名）
-2. 仅改变一个参数（如 LCS → GCS，其他不变），再次运行
-3. 对比两套结果：聚类数是否稳定？核心主题排名是否一致？少数聚类的命名是否有明显差异？
-4. 在方法节声明："To verify the robustness of our findings, we replicated the analysis using [Alternative Spec]. The cluster structure remained stable across both specifications (see Appendix), confirming the reliability of the reported thematic patterns."
-5. 将两套结果的对比表格放入 Appendix，Discussion 中用一段话解释任何实质性差异
-
-> **什么时候必须做**：若期刊为 Scientometrics / JoI / IJIM 等高要求 Q1，或审稿意见中出现"robustness check"字样时，建议加做双规格验证。
+> 完整内容已迁移至 `references/tool_reference.md` → §双规格鲁棒性三角验证策略
+>
+> **简要**：同一分析跑两套参数配置（如 LCS vs GCS），检验聚类结论是否依赖具体参数选择。适用于投稿 Scientometrics / JoI 等高要求 Q1 期刊时。
 
 ---
 
@@ -177,7 +161,7 @@
 | 🟡 | Trending Topics (Word Dynamics Over Time) | 多折线图或气泡图 | DE 字段 + 年份 + 频次 | 追踪关键词热度随时间的变化，识别新兴主题 | R `bibliometrix` `fieldByYear` | 选取频次 Top 10–15 关键词 |
 | 🔴 | Thematic Evolution Map | 桑基图/Alluvial图（节点=主题，箭头=时间流向） | 分时段关键词聚类结果 | 展示研究主题随时间的演化、合并与分裂 | R `ggalluvial` / Bibliometrix `thematicEvolution` | 建议分2–3个时间段；需预先定义时间窗口 |
 | 🔴 | Topic Modeling Visualization (LDA) | 气泡图或热力图 | 全文摘要（Abstract 字段） | 基于文本内容的主题发现，补充关键词分析 | R `topicmodels` + `ggplot2` / Python `gensim` | 超出标准文献计量范畴，适合 B 类综述 |
-| 🟡 | Keyword Burst Chart（突变词图谱） | 时序条形图（X轴=时间，Y轴=关键词，条长=突变强度和持续期） | DE/ID 字段 + 年份，使用 LLR（Log-Likelihood Ratio）算法检测 | 识别在特定时期**引用/频次骤然飙升**的关键词，捕捉研究前沿演变节点；与 RPYS 互补（RPYS 看被引文献节点，Burst 看关键词爆发） | CiteSpace（Analysis → Burst Detection） | 设置 γ（突变强度阈值，建议 ≥ 1.0）和最短持续期（建议 ≥ 2年）；可据此划分领域发展阶段并用阶段名命名（如"数字化整合期 2018–2022"）；参见 §写作范式：五阶段命名法 |
+| 🟡 | Keyword Burst Chart（突变词图谱） | 时序条形图（X轴=时间，Y轴=关键词，条长=突变强度和持续期） | DE/ID 字段 + 年份，使用 Kleinberg's Burst Detection Algorithm 检测（注意：LLR 是聚类标签提取算法，非突变检测算法） | 识别在特定时期**引用/频次骤然飙升**的关键词，捕捉研究前沿演变节点；与 RPYS 互补（RPYS 看被引文献节点，Burst 看关键词爆发） | CiteSpace（Analysis → Burst Detection） | 设置 γ（突变强度阈值，建议 ≥ 1.0）和最短持续期（建议 ≥ 2年）；可据此划分领域发展阶段并用阶段名命名（如"数字化整合期 2018–2022"），命名应基于该阶段突变词的共性主题 |
 | 🟡 | Timezone View（时间线图谱） | 时间线网络图（纵轴=关键词聚类，横轴=时间，节点颜色=聚类） | DE/ID 字段聚类结果 + 年份 | 展示各研究主题**何时兴起、如何沿时间轴演化**；是 CiteSpace 对 VOSviewer/Bibliometrix Overlay Map 的替代实现，侧重历时动态而非共时网络结构 | CiteSpace（Visualize → Timezone View） | Timezone View 是 CiteSpace 独有的视图模式，切换至此模式无需重新运行分析；注意与主题演化桑基图（Thematic Evolution Map）的区别：后者按时段聚类，Timezone View 按时间轴连续展示 |
 
 ---
@@ -198,123 +182,8 @@
 
 ## 分析参数速查
 
-### 主流工具对比速查
-
-> 来源：综合多篇参考文献（Chen 2025, Thakur 2024, Trojanowski 2025, 肖永慧 2025）
-
-| 工具 | 开发机构 | 运行环境 | 核心优势 | 独有功能 |
-|------|---------|---------|---------|---------|
-| **VOSviewer** | CWTS, 莱顿大学 | Windows/Mac（免费） | 直观网络可视化，适合共被引/共现/合著网络 | Overlay Visualization（时间叠加着色） |
-| **Bibliometrix / Biblioshiny** | 那不勒斯大学 | R + Rstudio（开源）；Biblioshiny 为无代码 GUI | 全流程一站式分析；RPYS、主题演化、战略坐标图 | RPYS 光谱分析；thematicEvolution |
-| **CiteSpace** | Drexel 大学 Chaomei Chen | Java（免费，需安装 JRE） | 知识演化与研究前沿检测；擅长时序动态分析 | **突变词检测（Burst Detection）**；**时间线图谱（Timezone View）**；Modularity Q/S 聚类质量报告 |
-
-> **选择建议**：
-> - 初学者 / 快速可视化 → **VOSviewer**（上手最快）
-> - 完整方法论 / 可复现报告 → **Bibliometrix / Biblioshiny**（功能最全）
-> - 时序演化 / 中文学者 / CNKI 数据 → **CiteSpace**（对 CNKI 格式支持好，突变词和时间线是独有优势）
-> - **可以组合使用**：用 VOSviewer 做共现网络可视化 + Bibliometrix 做主题图 + CiteSpace 做突变词分析，三者并不互斥
-
----
-
-### VOSviewer 常用参数设置
-
-| 分析类型 | 最小阈值建议 | 归一化方法 | 聚类算法 |
-|---------|------------|---------|---------|
-| 关键词共现 | 最小共现次数：3–5（视样本量调整） | Association Strength | Leiden |
-| 共被引（文献） | 最小共被引次数：5–10 | Association Strength | Leiden |
-| 共被引（作者） | 最小共被引次数：3–5 | Association Strength | Leiden |
-| 合著（作者） | 最小发文量：2–5 | Association Strength | Leiden |
-| 合著（国家） | 最小发文量：1–3 | Association Strength | Leiden |
-| 书目耦合（文献） | 最小共享参考文献数：5 | Association Strength | Leiden |
-
-### Bibliometrix 常用函数速查
-
-> **工具选择提示**：
-> - 会写 R 代码 → 使用 **Bibliometrix R 包**（灵活性最高，可重现）
-> - 不会写代码 → 使用 **Biblioshiny**（Bibliometrix 的网页 GUI 版，在 R 中运行 `biblioshiny()` 即可打开，无需编写代码，支持95%以上的分析功能）
+> ⚠️ **本章节已迁移至独立文件** → 请查阅 `references/tool_reference.md`
 >
-> 两者底层算法完全相同，产出结果一致。Biblioshiny 适合快速探索和非编程用户；R 代码更适合需要精确参数控制和可重现报告的正式分析（Trojanowski & Barmentloo 2025 全程使用 Biblioshiny）。
-
-| 功能 | R 函数 | Biblioshiny 路径 | 主要参数 |
-|------|--------|----------------|---------|
-| 读取数据 | `convert2df()` | 首页→上传文件 | `format="wos"` 或 `"scopus"` |
-| 描述性分析 | `biblioAnalysis()` + `summary()` | Overview→Main Results | — |
-| 年产出图 | `plot(M, "production")` | Overview→Annual Production | — |
-| 主题图 | `thematicMap()` | Clustering→Thematic Map | `field="DE"`, `n=250`, `minfreq=5` |
-| 主题演化 | `thematicEvolution()` | Clustering→Thematic Evolution | `years=c(2000,2010,2023)` |
-| 国家合作地图 | `countryCollaboration()` + `worldMap()` | Networks→Collaboration→Country | — |
-| 历史引用网络 | `histNetwork()` + `histPlot()` | Networks→Historical Direct Citation | `min.citations=3` |
-| 作者合著网络 | `biblioNetwork(analysis="collaboration")` | Networks→Collaboration→Authors | `network="authors"` |
-| RPYS 光谱分析 | `rpys()` | Extra→Reference Publication Year Spectroscopy | `sep=";"` |
-
-### 聚类质量指标：Modularity Q + Silhouette S
-
-> 来源：肖永慧 & 张庆龙 (2025)；仅适用于 CiteSpace 输出的聚类结果
-
-在 CiteSpace 运行关键词共现或共被引聚类后，系统自动输出两个聚类质量指标。报告这两个指标是 CiteSpace 研究的规范要求：
-
-| 指标 | 全称 | 计算含义 | 判断标准 |
-|------|------|---------|---------|
-| **Modularity Q** | 模块度 | 衡量网络划分为聚类的结构显著性（聚类内连接密度 vs 聚类间连接密度的比值） | Q > 0.3：聚类结构显著，网络划分有效 |
-| **Silhouette S** | 轮廓系数 | 衡量聚类内部同质性（每个节点距自身聚类重心 vs 距最近外部聚类重心的比值） | S > 0.5：聚类可信；S > 0.7：聚类高度显著 |
-
-**在方法节报告规范**：
-
-> "The keyword co-occurrence network was clustered using CiteSpace's built-in algorithm. The clustering solution yielded a modularity Q value of 0.XX (> 0.3, indicating significant network structure) and a mean silhouette score of 0.XX (> 0.5, indicating reliable cluster quality), confirming the validity of the identified thematic groupings."
-
-> **注意**：VOSviewer 使用 Leiden/Modularity 算法但不直接输出 Q 和 S 值；Bibliometrix 也不提供同等格式的 Q/S 报告。以上两个指标是 **CiteSpace 特有**的输出格式，使用其他工具时无需（也无法）报告这两个值，可改为报告网络密度（Network density）或聚类数量。
-
----
-
-### 多期时序共词分析：非等分时间窗口策略
-
-> 来源：Thakur & Kushwaha (2024)
-
-传统时序分析将研究时间段均等划分（如 2000–2010, 2011–2020），但对发展不均匀的领域，**非等分时间窗口**更能捕捉领域演化的真实拐点。
-
-**建议策略**：
-
-| 领域发展阶段 | 推荐时间窗口设计 |
-|------------|---------------|
-| 萌芽期（文献稀少，年均发文<10篇） | 合并为一个较长窗口（如 2000–2014，14年） |
-| 快速增长期（发文量出现拐点） | 设为独立中间窗口（如 2015–2019，5年） |
-| 成熟/近期期 | 设为最新窗口（如 2020–2024，5年） |
-
-**实践步骤**：
-1. 先绘制年度发文量折线图（§3.1），识别发文量的**拐点年份**
-2. 以拐点年份为界划分时间段（通常 2–3 段）
-3. 在每段内独立运行共词分析或主题演化分析
-4. 对比各段聚类结构的变化，在 Discussion 解释主题演化的驱动力
-
-**Bibliometrix 实现代码**：
-
-```r
-# 划分时间段（以发文量拐点为依据）
-M1 <- M[M$PY <= 2014, ]                     # 萌芽期
-M2 <- M[M$PY >= 2015 & M$PY <= 2019, ]    # 快速增长期
-M3 <- M[M$PY >= 2020, ]                    # 近期
-
-# 方法一：分段独立运行主题图
-map1 <- thematicMap(M1, field="DE", n=250, minfreq=3)
-map2 <- thematicMap(M2, field="DE", n=250, minfreq=5)
-map3 <- thematicMap(M3, field="DE", n=250, minfreq=5)
-
-# 方法二：主题演化（直接传入时间节点）
-thematicEvolution(M, years=c(2014, 2019, 2024), field="DE")
-```
-
-> **方法节说明规范**：需明确写出时间窗口的划分依据（如"基于年度发文量折线图识别的拐点，本研究将研究时段划分为萌芽期（XXXX–XXXX）、增长期（XXXX–XXXX）和近期（XXXX–XXXX）三个阶段"），避免被审稿人质疑为主观划分或事后调整。
-
----
-
-### Cohen's κ 判断标准
-
-| κ 值范围 | 一致性水平 | 发表建议 |
-|---------|----------|---------|
-| < 0.20 | 微弱 | 不可接受，需重新培训编码员 |
-| 0.21–0.40 | 一般 | 勉强，需说明原因 |
-| 0.41–0.60 | 中等 | 可接受（最低标准） |
-| 0.61–0.80 | 良好 | 符合发表要求 |
-| 0.81–1.00 | 极佳 | 优秀 |
-
-> B类综述的 κ 建议达到 ≥ 0.61，并在 Methodology 中明确报告。
+> 迁移内容包括：主流工具对比速查（VOSviewer / Bibliometrix / CiteSpace）、各工具参数设置表、聚类质量指标（Q/S）、非等分时间窗口策略、双规格鲁棒性验证、Cohen's κ 判断标准。
+>
+> **迁移原因**：将"按工具组织的参数速查"与"按论文章节组织的图表菜单"分开管理，减少单文件认知负荷，解决 Skill 阶段编号 vs 论文章节编号的混淆问题。

@@ -148,6 +148,31 @@
 
 ---
 
+### 新兴开放数据库：OpenAlex 与 Dimensions
+
+> 来源：2024–2025 年文献计量方法论文献趋势
+
+除 WoS 和 Scopus 外，近年来两个开放数据库正被越来越多的文献计量研究采用：
+
+| 数据库 | 覆盖范围 | 费用 | API支持 | 工具兼容性 | 适用场景 |
+|--------|---------|------|---------|-----------|---------|
+| **OpenAlex** | 2.5亿+ 文献（含期刊、会议、预印本），2022年上线，取代已关闭的 Microsoft Academic Graph | 完全免费 | REST API，批量下载 | VOSviewer（原生支持 OpenAlex JSON）；Bibliometrix（需转换格式） | 需要最大覆盖面的研究；无法获得 WoS/Scopus 权限时的替代方案；与 WoS/Scopus 做覆盖率交叉验证 |
+| **Dimensions** | 1.3亿+ 文献，含专利、临床试验、政策文件 | 基础版免费；完整版需付费 | API（付费版） | VOSviewer（支持 CSV 导入）；CiteSpace（需格式转换） | 需要整合学术文献+专利+临床数据的跨类型分析；需要 Altmetric 数据时 |
+
+**在五步选库协议中的定位**：
+
+OpenAlex 和 Dimensions **不取代** WoS/Scopus 在正式分析中的主库地位（因为审稿人普遍认可 WoS/Scopus 的质量控制），但可以在以下环节发挥作用：
+
+- **Step 2 补充**：与 WoS/Scopus 的检索量并排比较，展示不同数据库的覆盖差异（如"OpenAlex 检索到 3,200 条，远超 WoS 的 1,512 条，说明大量文献发表在 WoS 未收录的期刊中"）
+- **Limitations 中声明**：在 Discussion 局限性段落中主动提及"未来研究可使用 OpenAlex/Dimensions 扩大覆盖范围，特别是纳入非英文文献和开放获取来源"
+- **独立主库**（谨慎使用）：如果研究主题特殊（如预印本对学术传播的影响、专利与学术文献的交叉引用），OpenAlex/Dimensions 可以作为主库，但需在方法节充分论证选择理由
+
+**方法节提及模板**（放在 Limitations 或 Future Research 中）：
+
+> "The present analysis relied exclusively on the Web of Science Core Collection, which may underrepresent publications from open-access journals, regional databases, and non-English sources. Future studies could leverage emerging open bibliometric databases such as OpenAlex (Priem et al., 2022) or Dimensions to capture a broader range of scholarly output and assess the robustness of our findings across data sources."
+
+---
+
 ### 特殊情形：以 CNKI 为主库的双库协议
 
 > 来源：肖永慧 & 张庆龙 (2025)
